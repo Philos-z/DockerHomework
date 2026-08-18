@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Hello</title>
+</head>
+<body>
+    <h1>Flask + Docker Homework</h1>
+
+    <button id="hello-button" type="button">Get Hello</button>
+    <p id="result"></p>
+
+    <script>
+        const button = document.getElementById("hello-button");
+        const result = document.getElementById("result");
+
+        button.addEventListener("click", async () => {
+            result.textContent = "Loading...";
+
+            try {
+                const response = await fetch("/api/hello");
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                result.textContent = data.message;
+            } catch (error) {
+                result.textContent = "Request failed";
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
